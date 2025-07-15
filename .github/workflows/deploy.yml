@@ -2,28 +2,22 @@ name: Build and deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-
-permissions:
-  contents: write # 💡 Обязательно даёт доступ к push
+    branches: [main]
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install and build 🔧
+        run: |
+          npm install
+          npm run build
 
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
           folder: dist
-          token: ${{ secrets.GITHUB_TOKEN }} # ✅ встроенный токен
