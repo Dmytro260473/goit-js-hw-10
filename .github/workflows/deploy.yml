@@ -9,22 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.1
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18' # или нужная тебе версия
+      - name: Install and build 🔧
+        run: |
+          npm install
+          npm run build
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build project 🔧
-        run: npm run build
-
-      - name: Deploy to GitHub Pages 🚀
+      - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
-          branch: gh-pages # ветка, куда пушится сайт
-          folder: dist # папка с собранным сайтом
-          clean: true # очищает ветку перед деплоем
+          branch: gh-pages
+          folder: dist
